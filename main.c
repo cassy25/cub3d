@@ -6,7 +6,7 @@
 /*   By: cgeoffra <cgeoffra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:08:00 by roroca            #+#    #+#             */
-/*   Updated: 2023/12/15 18:32:29 by cgeoffra         ###   ########.fr       */
+/*   Updated: 2023/12/19 18:57:12 by cgeoffra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	ft_init_data(t_data *data)
 	data->WE = NULL;
 	data->EA = NULL;
 	data->map = NULL;
+	data->sizemapx = 0;
+	data->sizemapy = 0;
 	data->mlx = mlx_init();
 	data->wdw = mlx_new_window(data->mlx, 1920, 1080, "Cub3D");
 }
@@ -65,21 +67,25 @@ void	ft_handling_map(char *file)
 {
 	t_data *data;
 	
-	(void)file;
+	//(void)file;
 	data = malloc(sizeof(t_data));
 	ft_init_data(data);
-	/*if (ft_verif_content(file))
+	if (ft_verif_content(file))
 	{
-		//ft_destroy_data(data);
+		ft_destroy_data(data);
 		printf("1");
-	}
+	}/*
 	if (ft_verif_params(file, data))
 	{
-		//ft_destroy_data(data);
+		ft_destroy_data(data);
 		printf("2");
 	}*/
+	setup_map(data, file);
+	save_map(data, file);
 	printf("gg");
-	ft_destroy_data(data);
+	if (check_all(data) == 1)
+		return ;
+	//ft_destroy_data(data);
 }
 
 int	main(int ac, char **av)
